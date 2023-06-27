@@ -2,3 +2,7 @@ This extension was created to provide ability to quickly view images without lea
 
 Privacy:
 This extension doesn't collect any private data. It requires access to currently open page in order to get mouse coordinates when context menu was opened.
+
+<img src="./screenshots/1.png">
+
+<img src="./screenshots/2.png">
