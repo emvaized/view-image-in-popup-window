@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" type="image/png" href="../icon.svg" />
+  <link rel="stylesheet" href="viewer.css" />
+  <title>Image Viewer</title>
+
+  <!-- <script type="text/javascript" src="./gifplayer/libgif.js"></script>
+	<script type="text/javascript" src="./gifplayer/rubbable.js"></script> -->
+  <!-- <script src="../viewer/anotherGifPlayer/omggif.js" defer async></script>
+  <script src="../viewer/anotherGifPlayer/gif-player.js" defer async></script>
+  <script src="../viewer/anotherGifPlayer/index.js" defer async></script> -->
+  <script src="../viewer/anotherGifPlayer/gif-player.es6.js" defer async></script>
+</head>
+
+<body>
+    <div class="backgroundPattern"></div>
+
+    <div id='wrapper'>
+        <img id="image">
+        <gif-player id="gifPlayer" speed="1" play style="display: none;" src="https://media3.giphy.com/media/dCInLLuT83V2WliTdP/giphy.gif?cid=ecf05e47lmipeliphnhnwzqm69e4ai3qqtyu9d81orib7f2e&ep=v1_videos_trending&rid=giphy.gif&ct=v"></gif-player>
+    </div>  
+    
+    <div id="mouseListener"></div>
+
+    <div id="toolbar">
+        <div class="toolbarButton" id="rotateButton" title="Rotate"><img src="icons/rotate.svg"></div>        
+        <div class="toolbarButton" id="mirrorXButton" title="Mirror (hor)"><img src="icons/mirror.svg"></div>
+        <div class="toolbarButton" id="mirrorYButton" title="Mirror (vert)"><img src="icons/mirror.svg" style="transform:rotate(90deg);padding-top:2px"></div>
+        <div class="toolbarButton" id="fitScreenButton" title="Fit screen"><img src="icons/fit.svg"></div>
+
+        <input id="scaleSlider" type="range" orient="vertical" list="scaleValues" title="Zoom level"></input>
+        <datalist id="scaleValues">
+            <option value="0.1" label="0.1"></option>
+            <option value="0.25" label="0.25"></option>
+            <option value="0.5" label="0.5"></option>
+            <option value="0.75" label="0.75"></option>
+            <option value="1.0" label="1.0"></option>
+            <option value="1.5" label="1.5"></option>
+            <option value="2.0" label="2.0"></option>
+            <option value="2.5" label="2.5"></option>
+            <option value="3.0" label="3.0"></option>
+        </datalist>
+    </div>
+  <script src="../configs.js"></script>
+  <script src="viewer.js"></script>
+</body>
+
+</html>
