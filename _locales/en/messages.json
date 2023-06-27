@@ -19,5 +19,8 @@
     },    
     "hideBrowserControls": {
         "message": "Hide browser controls (addressbar, tabbar, etc)"
+    },    
+    "tryFitWindowSizeToImage": {
+        "message": "Try to fit window size to image aspect ratio"
     }
 }

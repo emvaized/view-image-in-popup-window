@@ -10,7 +10,6 @@ function init(){
     const imageUrl = window.location.href.split('?src=')[1];
     if (!imageUrl) return;
 
-  
     image = document.getElementById('image');
     image.src = imageUrl;
     document.title = imageUrl;

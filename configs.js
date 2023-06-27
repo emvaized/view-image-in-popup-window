@@ -2,7 +2,8 @@ const configs = {
     'closeWhenFocusedInitialWindow': true,
     'tryOpenAtMousePosition': false,
     'hideBrowserControls': true,
-    'popupHeight': 800,
+    'tryFitWindowSizeToImage': true,
+    'popupHeight': 600,
     'popupWidth': 600,
 }
 

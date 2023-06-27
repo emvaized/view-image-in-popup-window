@@ -6,6 +6,8 @@ chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
 
         if (request.action == 'updateExistingWindow'){
+            if (configs.tryFitWindowSizeToImage == false) return;
+
             let updatedHeight = request.imageHeight + titlebarheight, updatedWidth = request.imageWidth + toolbarwidth, newHeight, newWidth;
             const aspectRatio = updatedWidth / updatedHeight;
             newHeight = (window.screen.height * 0.7) + titlebarheight; newWidth = (newHeight * aspectRatio) + toolbarwidth;
@@ -63,12 +65,18 @@ chrome.contextMenus.onClicked.addListener(function(clickData) {
         });
     
         let dx, dy, height, width;
-        height = clientHeight ? clientHeight + titlebarheight : 500, width = (clientWidth ?? 500) + toolbarwidth;
-        const aspectRatio = width / height;
-        height = window.screen.height * 0.7 + titlebarheight; width = (height * aspectRatio) + toolbarwidth;
 
-        if (width > window.screen.width) {
-            width = window.screen.width * 0.7 + toolbarwidth; height = (width / aspectRatio) + titlebarheight;
+        if (configs.tryFitWindowSizeToImage == true) {
+            height = clientHeight ? clientHeight + titlebarheight : configs.popupHeight, width = (clientWidth ?? configs.popupWidth) + toolbarwidth;
+            const aspectRatio = width / height;
+            height = window.screen.height * 0.7 + titlebarheight; width = (height * aspectRatio) + toolbarwidth;
+    
+            if (width > window.screen.width) {
+                width = window.screen.width * 0.7 + toolbarwidth; height = (width / aspectRatio) + titlebarheight;
+            }
+        } else {
+            height = configs.popupHeight;
+            width = configs.popupWidth;
         }
 
         if (configs.tryOpenAtMousePosition == true && (lastClientX && lastClientY)) {
@@ -85,8 +93,8 @@ chrome.contextMenus.onClicked.addListener(function(clickData) {
 
         if (dx + width > window.screen.width) dx = dx - (dx + width - window.screen.width);
         if (dy + height > window.screen.height) dy = dy - (dy + height - window.screen.height);
+        
         dx = Math.round(dx); dy = Math.round(dy);
-
         height = parseInt(Math.round(height)); width = parseInt(Math.round(width));
     
         /// create popup window
