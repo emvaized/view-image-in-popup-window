@@ -37,8 +37,8 @@ function setImageListeners(){
         e.preventDefault();
         evt = e || window.event;
         if ("buttons" in evt) {
-            if (evt.button == 1 || evt.button == 2) {
-                /// Middle or right button to close view
+            if (evt.button == 1) {
+                /// Middle click to close view
                 closeView();
             } else if (evt.button == 0) {
                 /// Left button
@@ -201,7 +201,7 @@ function panMouseDownListener(e) {
 function imageWheelListener(e) {
     e.preventDefault();
     const wheelDelta = e.wheelDelta ?? -e.deltaY;
-    scale += wheelDelta / 200;
+    scale += wheelDelta / 300;
 
     if (scale < minScale) scale = minScale;
     if (scale > maxScale) scale = maxScale;
@@ -213,5 +213,5 @@ function imageWheelListener(e) {
 }
 
 function closeView() {
-
+    window.close()
 }

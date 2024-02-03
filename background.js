@@ -8,41 +8,27 @@ chrome.runtime.onMessage.addListener(
         if (request.action == 'updateExistingWindow'){
             if (configs.tryFitWindowSizeToImage == false) return;
 
-            let updatedHeight = request.imageHeight + titlebarheight, updatedWidth = request.imageWidth + toolbarwidth, newHeight, newWidth;
+            let updatedHeight = request.imageHeight, updatedWidth = request.imageWidth, newHeight, newWidth;
             const aspectRatio = updatedWidth / updatedHeight;
-            newHeight = (window.screen.height * 0.7) + titlebarheight; newWidth = (newHeight * aspectRatio) + toolbarwidth;
+            newHeight = (window.screen.height * 0.7); newWidth = (newHeight * aspectRatio) - toolbarwidth;
 
             if (newWidth > window.screen.width) {
-                newWidth = (window.screen.width * 0.7) + toolbarwidth; newHeight = (newWidth / aspectRatio) + titlebarheight;
+                newWidth = (window.screen.width * 0.7) + toolbarwidth; newHeight = (newWidth / aspectRatio);
             }
 
             chrome.windows.update(lastPopupId, {
                 'width': Math.round(newWidth), 
-                'height': Math.round(newHeight),
+                'height': Math.round(newHeight - 10),
                 'top': Math.round(lastPopupDy + ((lastPopupHeight - newHeight) / 2)), 'left': Math.round(lastPopupDx + (lastPopupWidth - newWidth) / 2)
             });
-        } else if (request.action == 'loadImgInBackground') {
-            fetch(request.src).then(function(resp){
-            console.log('resp');
-            console.log(resp);
-            console.log(resp.body);
-            console.log(resp.arrayBuffer());
-
-            let data = new Uint8Array(resp.arrayBuffer());
-            console.log(data);
-
-            sendResponse(resp.arrayBuffer());
-            });
-
-            return true;
         } else {
             /// save mouse coordinates
             lastClientX = request.lastClientX;
             lastClientY = request.lastClientY;
             clientHeight = request.clientHeight;
             clientWidth = request.clientWidth;
-            return true;
         }
+        return true;
     }
 );
 
@@ -67,12 +53,12 @@ chrome.contextMenus.onClicked.addListener(function(clickData) {
         let dx, dy, height, width;
 
         if (configs.tryFitWindowSizeToImage == true) {
-            height = clientHeight ? clientHeight + titlebarheight : configs.popupHeight, width = (clientWidth ?? configs.popupWidth) + toolbarwidth;
+            height = clientHeight ? clientHeight : configs.popupHeight, width = (clientWidth ?? configs.popupWidth);
             const aspectRatio = width / height;
-            height = window.screen.height * 0.7 + titlebarheight; width = (height * aspectRatio) + toolbarwidth;
+            height = window.screen.height * 0.7; width = (height * aspectRatio);
     
             if (width > window.screen.width) {
-                width = window.screen.width * 0.7 + toolbarwidth; height = (width / aspectRatio) + titlebarheight;
+                width = window.screen.width * 0.7 + toolbarwidth; height = (width / aspectRatio);
             }
         } else {
             height = configs.popupHeight;
@@ -100,7 +86,6 @@ chrome.contextMenus.onClicked.addListener(function(clickData) {
         /// create popup window
         setTimeout(function () {
             chrome.windows.create({
-                // 'url': clickData.srcUrl, 
                 'url': chrome.runtime.getURL('viewer/viewer.html') + '?src=' + clickData.srcUrl, 
                 'type': 'popup', 
                 'width': width, 'height': height,
