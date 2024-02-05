@@ -1,3 +1,7 @@
+0.0.4
+- optimized code for persistent background script
+- minified content script for better page load speed
+
 0.0.3
 - adjusted code to set popup size according to image size
 - added closing popup window on middle click

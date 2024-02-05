@@ -38,9 +38,15 @@ const contextMenuItem = {
     "contexts": ["image"]
 };
 
-chrome.contextMenus.create(contextMenuItem);
+chrome.runtime.onInstalled.addListener(function(){
+    chrome.contextMenus.create(contextMenuItem);
+})
+
 
 chrome.contextMenus.onClicked.addListener(function(clickData) {
+    console.log(clickData);
+    console.log(document);
+
     /// load configs
     loadUserConfigs(function(){
 
